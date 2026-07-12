@@ -27,7 +27,7 @@ providing operational insights.
 | ------ | ------ | ----- |
 | Authentication & RBAC | ✅ | JWT login, 4 roles, route + API guards |
 | Vehicle Registry | ✅ | CRUD, unique registration, filter by type/status/region, search |
-| Drivers & Safety Profiles | 🔜 | License expiry, safety score, compliance |
+| Drivers & Safety Profiles | ✅ | CRUD, license-expiry flags, safety score, compliance |
 | Trip Dispatcher | 🔜 | Lifecycle + business-rule validation engine |
 | Maintenance | 🔜 | Auto In-Shop / restore workflow |
 | Fuel & Expenses | 🔜 | Operational cost aggregation |

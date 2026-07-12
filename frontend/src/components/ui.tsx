@@ -210,6 +210,23 @@ export function NumberInput({
   );
 }
 
+/** Small horizontal progress meter with threshold colouring (e.g. safety score). */
+export function Meter({ value, max = 100 }: { value: number; max?: number }) {
+  const pct = Math.max(0, Math.min(100, (value / max) * 100));
+  const color =
+    pct >= 85 ? 'bg-emerald-500' : pct >= 70 ? 'bg-amber-500' : 'bg-rose-500';
+  return (
+    <div className="flex items-center gap-2">
+      <div className="h-1.5 w-16 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
+        <div className={`h-full ${color}`} style={{ width: `${pct}%` }} />
+      </div>
+      <span className="tabular text-xs text-slate-600 dark:text-slate-300">
+        {Math.round(value)}%
+      </span>
+    </div>
+  );
+}
+
 export function Spinner({ className }: { className?: string }) {
   return (
     <div
