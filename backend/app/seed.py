@@ -10,8 +10,14 @@ from datetime import date, datetime, timedelta
 
 from app.core.security import hash_password
 from app.database import Base, SessionLocal, engine
-from app.models import Driver, Trip, User, Vehicle
-from app.models.enums import DriverStatus, TripStatus, UserRole, VehicleStatus
+from app.models import Driver, MaintenanceLog, Trip, User, Vehicle
+from app.models.enums import (
+    DriverStatus,
+    MaintenanceStatus,
+    TripStatus,
+    UserRole,
+    VehicleStatus,
+)
 
 DEMO_PASSWORD = "password123"
 
@@ -212,12 +218,34 @@ def seed():
         ]
         db.add_all(trips)
 
+        # Maintenance: MINI-03 is In Shop because of an open record; a closed
+        # record on TRUCK-04 shows history without affecting its status.
+        maintenance = [
+            MaintenanceLog(
+                vehicle=vmap["MINI-03"],
+                description="Tyre Replacement",
+                cost=6200,
+                status=MaintenanceStatus.OPEN.value,
+                start_date=date(2026, 7, 6),
+            ),
+            MaintenanceLog(
+                vehicle=vmap["TRUCK-04"],
+                description="Engine Service",
+                cost=18000,
+                status=MaintenanceStatus.CLOSED.value,
+                start_date=date(2026, 6, 20),
+                end_date=date(2026, 6, 25),
+            ),
+        ]
+        db.add_all(maintenance)
+
         db.commit()
         print("Seed complete.")
         print(f"  Users: {len(users)} (password for all: {DEMO_PASSWORD})")
         print(f"  Vehicles: {len(vehicles)}")
         print(f"  Drivers: {len(drivers)}")
         print(f"  Trips: {len(trips)}")
+        print(f"  Maintenance: {len(maintenance)}")
     finally:
         db.close()
 
