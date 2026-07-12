@@ -21,6 +21,22 @@ providing operational insights.
 - **Safety Officer** — driver compliance, license validity, safety scores.
 - **Financial Analyst** — operational expenses, fuel, maintenance cost, ROI.
 
+## Features
+
+| Module | Status | Notes |
+| ------ | ------ | ----- |
+| Authentication & RBAC | ✅ | JWT login, 4 roles, route + API guards |
+| Vehicle Registry | ✅ | CRUD, unique registration, filter by type/status/region, search |
+| Drivers & Safety Profiles | 🔜 | License expiry, safety score, compliance |
+| Trip Dispatcher | 🔜 | Lifecycle + business-rule validation engine |
+| Maintenance | 🔜 | Auto In-Shop / restore workflow |
+| Fuel & Expenses | 🔜 | Operational cost aggregation |
+| Dashboard & Analytics | 🔜 | KPIs, charts, ROI, CSV export |
+
+**Access control** — mutations are role-scoped (e.g. only a Fleet Manager may
+add, edit or delete vehicles); all authenticated users can read. Registration
+numbers are unique, and Retired / In Shop vehicles are excluded from dispatch.
+
 ## Getting Started
 
 ### 1. Backend (http://localhost:8000)

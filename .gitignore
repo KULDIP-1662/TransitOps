@@ -21,5 +21,6 @@ Thumbs.db
 
 # ---- Hackathon artifacts (not code) ----
 *.pdf
+*.excalidraw
 odoo_mail
 odoo_mail/
