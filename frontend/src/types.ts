@@ -58,3 +58,56 @@ export type DriverInput = {
   safety_score?: number;
   status?: string;
 };
+
+export interface Trip {
+  id: number;
+  source: string;
+  destination: string;
+  vehicle_id: number;
+  driver_id: number;
+  cargo_weight: number;
+  planned_distance: number;
+  final_odometer?: number | null;
+  fuel_consumed?: number | null;
+  revenue: number;
+  status: string;
+  created_at?: string;
+  dispatched_at?: string | null;
+  completed_at?: string | null;
+  vehicle_registration?: string | null;
+  vehicle_name?: string | null;
+  vehicle_capacity?: number | null;
+  driver_name?: string | null;
+}
+
+export interface DispatchOptionVehicle {
+  id: number;
+  registration_number: string;
+  name_model: string;
+  max_load_capacity: number;
+}
+
+export interface DispatchOptionDriver {
+  id: number;
+  name: string;
+  license_number: string;
+}
+
+export interface DispatchOptions {
+  vehicles: DispatchOptionVehicle[];
+  drivers: DispatchOptionDriver[];
+}
+
+export type TripCreateInput = {
+  source: string;
+  destination: string;
+  vehicle_id: number;
+  driver_id: number;
+  cargo_weight: number;
+  planned_distance: number;
+  revenue?: number;
+};
+
+export function tripCode(id: number): string {
+  return `TR${String(id).padStart(3, '0')}`;
+}
