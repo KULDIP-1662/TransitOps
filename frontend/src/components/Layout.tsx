@@ -18,6 +18,7 @@ import {
 import clsx from 'clsx';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
+import ErrorBoundary from './ErrorBoundary';
 import { ROLE_LABELS, type Role } from '../types';
 
 interface NavItem {
@@ -153,7 +154,9 @@ export default function Layout() {
         </header>
 
         <main className="flex-1 overflow-y-auto p-6">
-          <Outlet />
+          <ErrorBoundary>
+            <Outlet />
+          </ErrorBoundary>
         </main>
       </div>
     </div>
