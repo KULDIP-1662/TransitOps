@@ -10,9 +10,18 @@ from datetime import date, datetime, timedelta
 
 from app.core.security import hash_password
 from app.database import Base, SessionLocal, engine
-from app.models import Driver, MaintenanceLog, Trip, User, Vehicle
+from app.models import (
+    Driver,
+    Expense,
+    FuelLog,
+    MaintenanceLog,
+    Trip,
+    User,
+    Vehicle,
+)
 from app.models.enums import (
     DriverStatus,
+    ExpenseCategory,
     MaintenanceStatus,
     TripStatus,
     UserRole,
@@ -239,6 +248,26 @@ def seed():
         ]
         db.add_all(maintenance)
 
+        # Fuel logs and other expenses (mirrors the mockup figures).
+        fuel_logs = [
+            FuelLog(vehicle=vmap["VAN-05"], trip=trips[0], liters=42, cost=3150,
+                    odometer=74260, date=date(2026, 7, 5)),
+            FuelLog(vehicle=vmap["TRUCK-11"], liters=110, cost=8400,
+                    odometer=182000, date=date(2026, 7, 6)),
+            FuelLog(vehicle=vmap["MINI-08"], liters=28, cost=2050, date=date(2026, 7, 6)),
+        ]
+        db.add_all(fuel_logs)
+
+        expenses = [
+            Expense(vehicle=vmap["VAN-05"], category=ExpenseCategory.TOLL.value,
+                    amount=120, description="Highway toll", date=date(2026, 7, 5)),
+            Expense(vehicle=vmap["TRUCK-11"], category=ExpenseCategory.TOLL.value,
+                    amount=340, description="Expressway toll", date=date(2026, 7, 6)),
+            Expense(vehicle=vmap["MINI-08"], category=ExpenseCategory.PARKING.value,
+                    amount=150, description="Depot parking", date=date(2026, 7, 6)),
+        ]
+        db.add_all(expenses)
+
         db.commit()
         print("Seed complete.")
         print(f"  Users: {len(users)} (password for all: {DEMO_PASSWORD})")
@@ -246,6 +275,7 @@ def seed():
         print(f"  Drivers: {len(drivers)}")
         print(f"  Trips: {len(trips)}")
         print(f"  Maintenance: {len(maintenance)}")
+        print(f"  Fuel logs: {len(fuel_logs)}  Expenses: {len(expenses)}")
     finally:
         db.close()
 

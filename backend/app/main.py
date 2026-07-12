@@ -3,7 +3,16 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app import models  # noqa: F401  (ensure all models are registered)
 from app.database import Base, engine
-from app.routers import auth, drivers, maintenance, trips, vehicles
+from app.routers import (
+    auth,
+    costs,
+    drivers,
+    expenses,
+    fuel,
+    maintenance,
+    trips,
+    vehicles,
+)
 
 Base.metadata.create_all(bind=engine)
 
@@ -22,6 +31,9 @@ app.include_router(vehicles.router)
 app.include_router(drivers.router)
 app.include_router(trips.router)
 app.include_router(maintenance.router)
+app.include_router(fuel.router)
+app.include_router(expenses.router)
+app.include_router(costs.router)
 
 
 @app.get("/api/health", tags=["health"])
