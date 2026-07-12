@@ -188,31 +188,21 @@ def seed():
         dmap = {d.name: d for d in drivers}
 
         # Seed trips across lifecycle stages (kept consistent with the seeded
-        # vehicle/driver statuses: TRUCK-11 & Priya are On Trip => a Dispatched trip).
+        # vehicle/driver statuses: TRUCK-11 & Priya are On Trip => a Dispatched
+        # trip). Distances/revenue chosen to give realistic ~8 km/L efficiency.
         trips = [
-            Trip(
+            Trip(  # trips[0] — referenced by the VAN-05 fuel log below
                 source="Gandhinagar Depot",
                 destination="Ahmedabad Hub",
                 vehicle=vmap["VAN-05"],
                 driver=dmap["Alex"],
                 cargo_weight=450,
-                planned_distance=38,
-                final_odometer=74260,
-                fuel_consumed=42,
-                revenue=12000,
+                planned_distance=360,
+                final_odometer=74360,
+                fuel_consumed=40,
+                revenue=45000,
                 status=TripStatus.COMPLETED.value,
                 completed_at=datetime(2026, 7, 5, 14, 30),
-            ),
-            Trip(
-                source="Vatva Industrial Area",
-                destination="Sanand Warehouse",
-                vehicle=vmap["TRUCK-11"],
-                driver=dmap["Priya"],
-                cargo_weight=4200,
-                planned_distance=54,
-                revenue=48000,
-                status=TripStatus.DISPATCHED.value,
-                dispatched_at=datetime(2026, 7, 7, 9, 0),
             ),
             Trip(
                 source="Mansa",
@@ -220,8 +210,43 @@ def seed():
                 vehicle=vmap["MINI-08"],
                 driver=dmap["Meena"],
                 cargo_weight=600,
-                planned_distance=22,
-                revenue=8000,
+                planned_distance=230,
+                fuel_consumed=27,
+                revenue=22000,
+                status=TripStatus.COMPLETED.value,
+                completed_at=datetime(2026, 7, 4, 12, 0),
+            ),
+            Trip(
+                source="Vatva Industrial Area",
+                destination="Sanand Warehouse",
+                vehicle=vmap["TRUCK-11"],
+                driver=dmap["Priya"],
+                cargo_weight=4000,
+                planned_distance=880,
+                fuel_consumed=108,
+                revenue=95000,
+                status=TripStatus.COMPLETED.value,
+                completed_at=datetime(2026, 7, 3, 18, 0),
+            ),
+            Trip(  # current dispatched trip -> TRUCK-11 & Priya are On Trip
+                source="Ahmedabad Hub",
+                destination="Rajkot Depot",
+                vehicle=vmap["TRUCK-11"],
+                driver=dmap["Priya"],
+                cargo_weight=3800,
+                planned_distance=210,
+                revenue=40000,
+                status=TripStatus.DISPATCHED.value,
+                dispatched_at=datetime(2026, 7, 7, 9, 0),
+            ),
+            Trip(  # awaiting dispatch
+                source="Gandhinagar Depot",
+                destination="Nadiad Hub",
+                vehicle=vmap["VAN-05"],
+                driver=dmap["Alex"],
+                cargo_weight=300,
+                planned_distance=64,
+                revenue=9000,
                 status=TripStatus.DRAFT.value,
             ),
         ]

@@ -6,10 +6,12 @@ from app.database import Base, engine
 from app.routers import (
     auth,
     costs,
+    dashboard,
     drivers,
     expenses,
     fuel,
     maintenance,
+    reports,
     trips,
     vehicles,
 )
@@ -34,6 +36,8 @@ app.include_router(maintenance.router)
 app.include_router(fuel.router)
 app.include_router(expenses.router)
 app.include_router(costs.router)
+app.include_router(dashboard.router)
+app.include_router(reports.router)
 
 
 @app.get("/api/health", tags=["health"])
