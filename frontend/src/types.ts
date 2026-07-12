@@ -32,3 +32,29 @@ export interface Vehicle {
 }
 
 export type VehicleInput = Omit<Vehicle, 'id' | 'created_at'>;
+
+export interface Driver {
+  id: number;
+  name: string;
+  license_number: string;
+  license_category?: string | null;
+  license_expiry_date: string;
+  contact_number?: string | null;
+  safety_score: number;
+  status: string;
+  created_at?: string;
+  license_expired: boolean;
+  expiring_soon: boolean;
+  days_to_expiry: number;
+  trip_completions: number;
+}
+
+export type DriverInput = {
+  name: string;
+  license_number: string;
+  license_category?: string;
+  license_expiry_date: string;
+  contact_number?: string;
+  safety_score?: number;
+  status?: string;
+};

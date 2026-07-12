@@ -4,6 +4,7 @@ import Layout from './components/Layout';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Vehicles from './pages/Vehicles';
+import Drivers from './pages/Drivers';
 import Placeholder from './pages/Placeholder';
 
 export default function App() {
@@ -20,7 +21,7 @@ export default function App() {
         >
           <Route path="/" element={<Dashboard />} />
           <Route path="/vehicles" element={<Vehicles />} />
-          <Route path="/drivers" element={<Placeholder title="Drivers" />} />
+          <Route path="/drivers" element={<Drivers />} />
           <Route path="/trips" element={<Placeholder title="Trips" />} />
           <Route
             path="/maintenance"
