@@ -132,3 +132,65 @@ export type MaintenanceInput = {
   start_date?: string;
   status?: string;
 };
+
+export interface FuelLog {
+  id: number;
+  vehicle_id: number;
+  trip_id?: number | null;
+  liters: number;
+  cost: number;
+  odometer?: number | null;
+  date?: string | null;
+  created_at?: string;
+  vehicle_registration?: string | null;
+  vehicle_name?: string | null;
+}
+
+export type FuelInput = {
+  vehicle_id: number;
+  liters: number;
+  cost: number;
+  odometer?: number;
+  date?: string;
+};
+
+export interface Expense {
+  id: number;
+  vehicle_id?: number | null;
+  trip_id?: number | null;
+  category: string;
+  amount: number;
+  description?: string | null;
+  date?: string | null;
+  created_at?: string;
+  vehicle_registration?: string | null;
+  vehicle_name?: string | null;
+}
+
+export type ExpenseInput = {
+  vehicle_id?: number;
+  category: string;
+  amount: number;
+  description?: string;
+  date?: string;
+};
+
+export interface VehicleCost {
+  vehicle_id: number;
+  name_model: string;
+  registration_number: string;
+  fuel_cost: number;
+  maintenance_cost: number;
+  other_expenses: number;
+  operational_cost: number;
+}
+
+export interface CostSummary {
+  total_fuel_cost: number;
+  total_maintenance_cost: number;
+  total_other_expenses: number;
+  total_operational_cost: number;
+  per_vehicle: VehicleCost[];
+}
+
+export const EXPENSE_CATEGORIES = ['Toll', 'Maintenance', 'Parking', 'Other'];

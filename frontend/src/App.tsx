@@ -7,6 +7,7 @@ import Vehicles from './pages/Vehicles';
 import Drivers from './pages/Drivers';
 import Trips from './pages/Trips';
 import Maintenance from './pages/Maintenance';
+import Fuel from './pages/Fuel';
 import Placeholder from './pages/Placeholder';
 
 export default function App() {
@@ -33,7 +34,7 @@ export default function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/fuel" element={<Placeholder title="Fuel & Expenses" />} />
+          <Route path="/fuel" element={<Fuel />} />
           <Route
             path="/reports"
             element={
