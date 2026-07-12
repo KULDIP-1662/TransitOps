@@ -9,7 +9,7 @@ import Trips from './pages/Trips';
 import Maintenance from './pages/Maintenance';
 import Fuel from './pages/Fuel';
 import Reports from './pages/Reports';
-import Placeholder from './pages/Placeholder';
+import Settings from './pages/Settings';
 
 export default function App() {
   return (
@@ -48,7 +48,7 @@ export default function App() {
             path="/settings"
             element={
               <ProtectedRoute roles={['FLEET_MANAGER']}>
-                <Placeholder title="Settings & RBAC" />
+                <Settings />
               </ProtectedRoute>
             }
           />
