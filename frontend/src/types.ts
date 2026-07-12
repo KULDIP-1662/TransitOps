@@ -217,6 +217,13 @@ export interface DashboardData {
     source: string;
     destination: string;
   }[];
+  license_alerts: {
+    driver_id: number;
+    name: string;
+    license_number: string;
+    days_to_expiry: number;
+    expired: boolean;
+  }[];
 }
 
 export interface VehicleReport {

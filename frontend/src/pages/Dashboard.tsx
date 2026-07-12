@@ -7,6 +7,8 @@ import {
   Clock,
   Users,
   Gauge,
+  ShieldAlert,
+  ShieldCheck,
 } from 'lucide-react';
 import {
   PieChart,
@@ -59,6 +61,43 @@ export default function Dashboard() {
         <StatCard label="Pending Trips" accent="slate" icon={<Clock size={16} />} value={data.pending_trips} />
         <StatCard label="Drivers On Duty" accent="green" icon={<Users size={16} />} value={data.drivers_on_duty} sub={`of ${data.total_drivers}`} />
         <StatCard label="Completed Trips" accent="indigo" icon={<Route size={16} />} value={data.completed_trips} />
+      </div>
+
+      <div className="mb-4">
+        <Card className="p-4">
+          <div className="mb-2 flex items-center gap-2">
+            {data.license_alerts.length > 0 ? (
+              <ShieldAlert size={16} className="text-amber-500" />
+            ) : (
+              <ShieldCheck size={16} className="text-emerald-500" />
+            )}
+            <h3 className="font-heading text-sm font-semibold text-slate-900 dark:text-white">
+              Compliance Alerts
+            </h3>
+          </div>
+          {data.license_alerts.length === 0 ? (
+            <p className="text-sm text-slate-500 dark:text-slate-400">
+              All driver licenses are valid. No compliance issues.
+            </p>
+          ) : (
+            <div className="flex flex-wrap gap-2">
+              {data.license_alerts.map((a) => (
+                <div
+                  key={a.driver_id}
+                  className="flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-1.5 text-sm dark:border-slate-700"
+                >
+                  <span className="font-medium">{a.name}</span>
+                  <span className="tabular text-xs text-slate-400">{a.license_number}</span>
+                  {a.expired ? (
+                    <Badge color="red">License expired</Badge>
+                  ) : (
+                    <Badge color="amber">Expires in {a.days_to_expiry}d</Badge>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </Card>
       </div>
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-5">

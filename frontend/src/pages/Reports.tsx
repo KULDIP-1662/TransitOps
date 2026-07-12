@@ -9,13 +9,47 @@ import {
   ResponsiveContainer,
   Cell,
 } from 'recharts';
-import { Download, Gauge, Wallet, TrendingUp, IndianRupee } from 'lucide-react';
+import { Download, FileText, Gauge, Wallet, TrendingUp, IndianRupee } from 'lucide-react';
+import { jsPDF } from 'jspdf';
+import autoTable from 'jspdf-autotable';
 import { getReport, downloadReportCsv } from '../api/analytics';
+import type { ReportData } from '../types';
 import { Button, PageHeader, Card, Spinner } from '../components/ui';
 import StatCard from '../components/StatCard';
 import ChartCard from '../components/ChartCard';
 import { formatINR, formatNumber } from '../lib/format';
 import { useChartColors } from '../lib/chartTheme';
+
+function exportPdf(data: ReportData) {
+  const doc = new jsPDF();
+  doc.setFontSize(16);
+  doc.text('TransitOps — Fleet Report', 14, 18);
+  doc.setFontSize(10);
+  doc.setTextColor(90);
+  doc.text(
+    `Fuel Efficiency: ${data.fuel_efficiency} km/L   |   Fleet Utilization: ${data.fleet_utilization}%   |   ` +
+      `Operational Cost: Rs ${data.total_operational_cost.toLocaleString('en-IN')}   |   Revenue: Rs ${data.monthly_revenue.toLocaleString('en-IN')}`,
+    14,
+    26
+  );
+  autoTable(doc, {
+    startY: 32,
+    head: [['Reg', 'Vehicle', 'Dist (km)', 'Fuel (L)', 'km/L', 'Operational', 'Revenue', 'ROI %']],
+    body: data.per_vehicle.map((v) => [
+      v.registration_number,
+      v.name_model,
+      v.distance,
+      v.fuel_liters,
+      v.fuel_efficiency,
+      `Rs ${v.operational_cost.toLocaleString('en-IN')}`,
+      `Rs ${v.revenue.toLocaleString('en-IN')}`,
+      `${v.roi}%`,
+    ]),
+    styles: { fontSize: 9 },
+    headStyles: { fillColor: [79, 70, 229] },
+  });
+  doc.save('transitops_report.pdf');
+}
 
 export default function Reports() {
   const colors = useChartColors();
@@ -55,9 +89,14 @@ export default function Reports() {
         title="Reports & Analytics"
         subtitle="Fleet performance, efficiency and profitability"
         actions={
-          <Button variant="secondary" onClick={() => downloadReportCsv()}>
-            <Download size={16} /> Export CSV
-          </Button>
+          <>
+            <Button variant="secondary" onClick={() => exportPdf(data)}>
+              <FileText size={16} /> Export PDF
+            </Button>
+            <Button variant="secondary" onClick={() => downloadReportCsv()}>
+              <Download size={16} /> Export CSV
+            </Button>
+          </>
         }
       />
 
