@@ -194,3 +194,51 @@ export interface CostSummary {
 }
 
 export const EXPENSE_CATEGORIES = ['Toll', 'Maintenance', 'Parking', 'Other'];
+
+export interface DashboardData {
+  active_vehicles: number;
+  available_vehicles: number;
+  in_maintenance: number;
+  on_trip_vehicles: number;
+  retired_vehicles: number;
+  active_trips: number;
+  pending_trips: number;
+  completed_trips: number;
+  total_trips: number;
+  drivers_on_duty: number;
+  total_drivers: number;
+  fleet_utilization: number;
+  vehicle_status: { label: string; count: number }[];
+  recent_trips: {
+    id: number;
+    vehicle_name?: string | null;
+    driver_name?: string | null;
+    status: string;
+    source: string;
+    destination: string;
+  }[];
+}
+
+export interface VehicleReport {
+  vehicle_id: number;
+  name_model: string;
+  registration_number: string;
+  distance: number;
+  fuel_liters: number;
+  fuel_efficiency: number;
+  fuel_cost: number;
+  maintenance_cost: number;
+  operational_cost: number;
+  revenue: number;
+  roi: number;
+}
+
+export interface ReportData {
+  fuel_efficiency: number;
+  fleet_utilization: number;
+  total_operational_cost: number;
+  monthly_revenue: number;
+  total_distance: number;
+  total_fuel_liters: number;
+  per_vehicle: VehicleReport[];
+}

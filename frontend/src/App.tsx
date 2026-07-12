@@ -8,6 +8,7 @@ import Drivers from './pages/Drivers';
 import Trips from './pages/Trips';
 import Maintenance from './pages/Maintenance';
 import Fuel from './pages/Fuel';
+import Reports from './pages/Reports';
 import Placeholder from './pages/Placeholder';
 
 export default function App() {
@@ -39,7 +40,7 @@ export default function App() {
             path="/reports"
             element={
               <ProtectedRoute roles={['FLEET_MANAGER', 'FINANCIAL_ANALYST']}>
-                <Placeholder title="Reports & Analytics" />
+                <Reports />
               </ProtectedRoute>
             }
           />
