@@ -17,6 +17,14 @@ class StatusCount(BaseModel):
     count: int
 
 
+class LicenseAlert(BaseModel):
+    driver_id: int
+    name: str
+    license_number: str
+    days_to_expiry: int
+    expired: bool
+
+
 class DashboardOut(BaseModel):
     active_vehicles: int
     available_vehicles: int
@@ -32,3 +40,4 @@ class DashboardOut(BaseModel):
     fleet_utilization: int
     vehicle_status: list[StatusCount]
     recent_trips: list[RecentTrip]
+    license_alerts: list[LicenseAlert]

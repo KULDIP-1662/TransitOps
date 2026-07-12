@@ -1,4 +1,6 @@
 """Dashboard KPI and reports/analytics computations."""
+from datetime import date, timedelta
+
 from sqlalchemy import func
 from sqlalchemy.orm import Session
 
@@ -69,6 +71,25 @@ def compute_dashboard(db: Session) -> dict:
         {"label": VehicleStatus.RETIRED.value, "count": retired},
     ]
 
+    # Compliance: drivers with an expired or soon-to-expire (<=30d) licence.
+    today = date.today()
+    alert_drivers = (
+        db.query(Driver)
+        .filter(Driver.license_expiry_date <= today + timedelta(days=30))
+        .order_by(Driver.license_expiry_date)
+        .all()
+    )
+    license_alerts = [
+        {
+            "driver_id": d.id,
+            "name": d.name,
+            "license_number": d.license_number,
+            "days_to_expiry": (d.license_expiry_date - today).days,
+            "expired": d.license_expiry_date < today,
+        }
+        for d in alert_drivers
+    ]
+
     return {
         "active_vehicles": active_vehicles,
         "available_vehicles": available,
@@ -84,6 +105,7 @@ def compute_dashboard(db: Session) -> dict:
         "fleet_utilization": fleet_utilization,
         "vehicle_status": vehicle_status,
         "recent_trips": recent_trips,
+        "license_alerts": license_alerts,
     }
 
 
