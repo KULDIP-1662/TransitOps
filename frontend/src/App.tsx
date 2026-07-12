@@ -3,6 +3,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Layout from './components/Layout';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import Vehicles from './pages/Vehicles';
 import Placeholder from './pages/Placeholder';
 
 export default function App() {
@@ -18,7 +19,7 @@ export default function App() {
           }
         >
           <Route path="/" element={<Dashboard />} />
-          <Route path="/vehicles" element={<Placeholder title="Vehicles" />} />
+          <Route path="/vehicles" element={<Vehicles />} />
           <Route path="/drivers" element={<Placeholder title="Drivers" />} />
           <Route path="/trips" element={<Placeholder title="Trips" />} />
           <Route
@@ -34,7 +35,15 @@ export default function App() {
             path="/reports"
             element={
               <ProtectedRoute roles={['FLEET_MANAGER', 'FINANCIAL_ANALYST']}>
-                <Placeholder title="Reports" />
+                <Placeholder title="Reports & Analytics" />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <ProtectedRoute roles={['FLEET_MANAGER']}>
+                <Placeholder title="Settings & RBAC" />
               </ProtectedRoute>
             }
           />

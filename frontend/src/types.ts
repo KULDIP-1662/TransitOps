@@ -17,3 +17,18 @@ export const ROLE_LABELS: Record<Role, string> = {
   SAFETY_OFFICER: 'Safety Officer',
   FINANCIAL_ANALYST: 'Financial Analyst',
 };
+
+export interface Vehicle {
+  id: number;
+  registration_number: string;
+  name_model: string;
+  type: string;
+  max_load_capacity: number;
+  odometer: number;
+  acquisition_cost: number;
+  region?: string | null;
+  status: string;
+  created_at?: string;
+}
+
+export type VehicleInput = Omit<Vehicle, 'id' | 'created_at'>;

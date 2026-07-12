@@ -1,10 +1,14 @@
 import {
+  useState,
   type ButtonHTMLAttributes,
   type InputHTMLAttributes,
   type SelectHTMLAttributes,
   type ReactNode,
 } from 'react';
 import clsx from 'clsx';
+
+const FIELD_CLASS =
+  'w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/30 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100';
 
 export function Card({
   className,
@@ -148,6 +152,60 @@ export function Select({
       >
         {children}
       </select>
+    </label>
+  );
+}
+
+/**
+ * Numeric input that avoids the "leading zero" glitch: it keeps its own text
+ * state so a 0 default shows blank (with a "0" placeholder) instead of forcing
+ * you to delete the 0 first. Also disables mouse-wheel value changes.
+ */
+export function NumberInput({
+  label,
+  value,
+  onChange,
+  min,
+  step,
+  required,
+  placeholder = '0',
+  className,
+}: {
+  label?: string;
+  value: number;
+  onChange: (n: number) => void;
+  min?: number;
+  step?: number;
+  required?: boolean;
+  placeholder?: string;
+  className?: string;
+}) {
+  const [text, setText] = useState(() =>
+    value === 0 || value == null || Number.isNaN(value) ? '' : String(value)
+  );
+  return (
+    <label className="block">
+      {label && (
+        <span className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">
+          {label}
+        </span>
+      )}
+      <input
+        type="number"
+        inputMode="decimal"
+        min={min}
+        step={step}
+        required={required}
+        value={text}
+        placeholder={placeholder}
+        onWheel={(e) => e.currentTarget.blur()}
+        onChange={(e) => {
+          const t = e.target.value;
+          setText(t);
+          onChange(t === '' ? 0 : Number(t));
+        }}
+        className={clsx(FIELD_CLASS, className)}
+      />
     </label>
   );
 }
