@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard';
 import Vehicles from './pages/Vehicles';
 import Drivers from './pages/Drivers';
 import Trips from './pages/Trips';
+import Maintenance from './pages/Maintenance';
 import Placeholder from './pages/Placeholder';
 
 export default function App() {
@@ -28,7 +29,7 @@ export default function App() {
             path="/maintenance"
             element={
               <ProtectedRoute roles={['FLEET_MANAGER']}>
-                <Placeholder title="Maintenance" />
+                <Maintenance />
               </ProtectedRoute>
             }
           />

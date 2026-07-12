@@ -111,3 +111,24 @@ export type TripCreateInput = {
 export function tripCode(id: number): string {
   return `TR${String(id).padStart(3, '0')}`;
 }
+
+export interface Maintenance {
+  id: number;
+  vehicle_id: number;
+  description: string;
+  cost: number;
+  status: string;
+  start_date?: string | null;
+  end_date?: string | null;
+  created_at?: string;
+  vehicle_registration?: string | null;
+  vehicle_name?: string | null;
+}
+
+export type MaintenanceInput = {
+  vehicle_id: number;
+  description: string;
+  cost: number;
+  start_date?: string;
+  status?: string;
+};
