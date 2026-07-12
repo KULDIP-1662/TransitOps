@@ -30,7 +30,7 @@ providing operational insights.
 | Drivers & Safety Profiles | ✅ | CRUD, license-expiry flags, safety score, compliance |
 | Trip Dispatcher | ✅ | Lifecycle board + full business-rule validation engine |
 | Maintenance | ✅ | Auto In-Shop / restore workflow |
-| Fuel & Expenses | 🔜 | Operational cost aggregation |
+| Fuel & Expenses | ✅ | Operational cost aggregation |
 | Dashboard & Analytics | 🔜 | KPIs, charts, ROI, CSV export |
 
 **Access control** — mutations are role-scoped (e.g. only a Fleet Manager may
