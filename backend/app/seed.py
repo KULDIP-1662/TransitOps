@@ -118,42 +118,52 @@ def seed():
         db.add_all(vehicles)
 
         today = date.today()
+        # Drivers mirror the mockup: Alex valid, John expired+suspended, etc.
         drivers = [
             Driver(
                 name="Alex",
-                license_number="DL-ALEX-001",
+                license_number="DL-88213",
                 license_category="LMV",
-                license_expiry_date=today + timedelta(days=400),
-                contact_number="+1-555-0100",
-                safety_score=95,
+                license_expiry_date=date(2028, 12, 15),
+                contact_number="98765 43210",
+                safety_score=96,
                 status=DriverStatus.AVAILABLE.value,
             ),
             Driver(
-                name="Bianca",
-                license_number="DL-BIA-002",
+                name="John",
+                license_number="DL-44120",
                 license_category="HMV",
-                license_expiry_date=today + timedelta(days=25),  # expiring soon
-                contact_number="+1-555-0101",
-                safety_score=88,
-                status=DriverStatus.AVAILABLE.value,
-            ),
-            Driver(
-                name="Carlos",
-                license_number="DL-CAR-003",
-                license_category="HMV",
-                license_expiry_date=today - timedelta(days=10),  # expired
-                contact_number="+1-555-0102",
-                safety_score=72,
-                status=DriverStatus.AVAILABLE.value,
-            ),
-            Driver(
-                name="Divya",
-                license_number="DL-DIV-004",
-                license_category="LMV",
-                license_expiry_date=today + timedelta(days=200),
-                contact_number="+1-555-0103",
-                safety_score=60,
+                license_expiry_date=date(2025, 3, 20),  # expired
+                contact_number="98220 11987",
+                safety_score=81,
                 status=DriverStatus.SUSPENDED.value,
+            ),
+            Driver(
+                name="Priya",
+                license_number="DL-77031",
+                license_category="LMV",
+                license_expiry_date=date(2027, 8, 10),
+                contact_number="99110 55420",
+                safety_score=99,
+                status=DriverStatus.ON_TRIP.value,
+            ),
+            Driver(
+                name="Suresh",
+                license_number="DL-90045",
+                license_category="HMV",
+                license_expiry_date=date(2027, 1, 5),
+                contact_number="97440 88213",
+                safety_score=88,
+                status=DriverStatus.OFF_DUTY.value,
+            ),
+            Driver(
+                name="Meena",
+                license_number="DL-55210",
+                license_category="LMV",
+                license_expiry_date=today + timedelta(days=18),  # expiring soon
+                contact_number="98330 22110",
+                safety_score=90,
+                status=DriverStatus.AVAILABLE.value,
             ),
         ]
         db.add_all(drivers)
