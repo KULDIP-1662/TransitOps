@@ -6,12 +6,12 @@ video can be reproduced end to end.
 
 Run from the backend/ directory:  python -m app.seed
 """
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 
 from app.core.security import hash_password
 from app.database import Base, SessionLocal, engine
-from app.models import Driver, User, Vehicle
-from app.models.enums import DriverStatus, UserRole, VehicleStatus
+from app.models import Driver, Trip, User, Vehicle
+from app.models.enums import DriverStatus, TripStatus, UserRole, VehicleStatus
 
 DEMO_PASSWORD = "password123"
 
@@ -167,12 +167,57 @@ def seed():
             ),
         ]
         db.add_all(drivers)
+        db.flush()  # assign ids so trips can reference vehicles/drivers
+
+        vmap = {v.name_model: v for v in vehicles}
+        dmap = {d.name: d for d in drivers}
+
+        # Seed trips across lifecycle stages (kept consistent with the seeded
+        # vehicle/driver statuses: TRUCK-11 & Priya are On Trip => a Dispatched trip).
+        trips = [
+            Trip(
+                source="Gandhinagar Depot",
+                destination="Ahmedabad Hub",
+                vehicle=vmap["VAN-05"],
+                driver=dmap["Alex"],
+                cargo_weight=450,
+                planned_distance=38,
+                final_odometer=74260,
+                fuel_consumed=42,
+                revenue=12000,
+                status=TripStatus.COMPLETED.value,
+                completed_at=datetime(2026, 7, 5, 14, 30),
+            ),
+            Trip(
+                source="Vatva Industrial Area",
+                destination="Sanand Warehouse",
+                vehicle=vmap["TRUCK-11"],
+                driver=dmap["Priya"],
+                cargo_weight=4200,
+                planned_distance=54,
+                revenue=48000,
+                status=TripStatus.DISPATCHED.value,
+                dispatched_at=datetime(2026, 7, 7, 9, 0),
+            ),
+            Trip(
+                source="Mansa",
+                destination="Kalol Depot",
+                vehicle=vmap["MINI-08"],
+                driver=dmap["Meena"],
+                cargo_weight=600,
+                planned_distance=22,
+                revenue=8000,
+                status=TripStatus.DRAFT.value,
+            ),
+        ]
+        db.add_all(trips)
 
         db.commit()
         print("Seed complete.")
         print(f"  Users: {len(users)} (password for all: {DEMO_PASSWORD})")
         print(f"  Vehicles: {len(vehicles)}")
         print(f"  Drivers: {len(drivers)}")
+        print(f"  Trips: {len(trips)}")
     finally:
         db.close()
 
