@@ -29,7 +29,7 @@ providing operational insights.
 | Vehicle Registry | ✅ | CRUD, unique registration, filter by type/status/region, search |
 | Drivers & Safety Profiles | ✅ | CRUD, license-expiry flags, safety score, compliance |
 | Trip Dispatcher | ✅ | Lifecycle board + full business-rule validation engine |
-| Maintenance | 🔜 | Auto In-Shop / restore workflow |
+| Maintenance | ✅ | Auto In-Shop / restore workflow |
 | Fuel & Expenses | 🔜 | Operational cost aggregation |
 | Dashboard & Analytics | 🔜 | KPIs, charts, ROI, CSV export |
 
